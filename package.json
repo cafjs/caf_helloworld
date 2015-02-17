@@ -1,0 +1,28 @@
+{
+  "name": "caf_react_helloworld",
+  "description": "Cloud Assistants with React basic example",
+  "version": "0.2.0",
+  "author": "Antonio Lain <antlai@cafjs.com>",
+  "dependencies": {
+      "caf_core": "^0.2.0",
+      "caf_cli": "^0.2.0",
+      "react" : "^0.12.2",
+      "react-bootstrap" : "^0.13.3",
+      "flux": "^2.0.2",
+      "keymirror": "^0.1.0",
+      "eventemitter2" : "^0.4.14"
+   },
+    "devDependencies": {
+        "nodeunit" : ">=0.9",
+        "browserify" : "^0.8.0",
+        "uglify-js" : "^2.4.0"
+    },
+    "scripts": {
+        "test": "node ./node_modules/.bin/nodeunit",
+        "build-js" : "browserify  -d -r ./public/js/app.js:app -o public/js/build.js",
+        "build-min-js" : "export NODE_ENV=production; browserify -r ./public/js/app.js:app | uglifyjs > public/js/build.min.js",
+        "build": "npm run build-js && npm run build-min-js"
+    },
+   "main": "index",
+  "engines": { "node": ">= 0.10.29" }
+}
