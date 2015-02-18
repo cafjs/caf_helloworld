@@ -1,7 +1,7 @@
 {
   "name": "caf_react_helloworld",
   "description": "Cloud Assistants with React basic example",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Antonio Lain <antlai@cafjs.com>",
   "dependencies": {
       "caf_core": "^0.2.0",

@@ -16,6 +16,7 @@ AppSession.onopen = function() {
     AppActions.init();
 };
 
+
 exports.main = function() {
     console.log('Hello');
 };
