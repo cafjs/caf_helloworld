@@ -17,6 +17,13 @@ AppSession.onopen = function() {
 };
 
 
-exports.main = function() {
-    console.log('Hello');
+exports.main = function(data) {
+    if (typeof window === 'undefined') {
+        // server side rendering
+        AppActions.init(data);
+        return React.renderToString(cE(MyApp, null));
+    } else {
+        console.log('Hello');
+        return null;
+    }
 };

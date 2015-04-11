@@ -1,3 +1,7 @@
 var cli = require('caf_cli');
-
-module.exports = new cli.Session(window.location.href);
+if (typeof window === 'undefined') {
+    // server side rendering
+    module.exports = {};
+} else {
+    module.exports = new cli.Session(window.location.href);
+}

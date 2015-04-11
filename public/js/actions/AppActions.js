@@ -41,14 +41,20 @@ var wsStatusF =  function(isClosed) {
 };
 
 var AppActions = {
-    init: function() {
-        AppSession.getState(function(err, data) {
-                                if (err) {
-                                    errorF(err);
-                                } else {
-                                    updateF(data);
-                                }
-                            });
+    init: function(initialData) {
+        if (typeof window === 'undefined') {
+            // server side rendering
+            updateF(initialData);
+        } else {
+            AppSession.hello(AppSession.getCacheKey(),
+                             function(err, data) {
+                                 if (err) {
+                                     errorF(err);
+                                 } else {
+                                     updateF(data);
+                                 }
+                             });
+        }
     },
     increment: function(inc) {
         AppSession.increment(inc, function(err, data) {

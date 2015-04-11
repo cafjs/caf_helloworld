@@ -2,7 +2,10 @@
     "name": "top",
     "components": [
         {
-            "name": "log"
+            "name": "log",
+            "env" : {
+                "logLevel" : "DEBUG"
+            }
         },
         {
             "name": "security",
@@ -13,10 +16,24 @@
                 "trustedPubKeyFile" : "rsa_pub.pem",
                 "privateKeyFile": null,
                 "publicKeyFile" : null,
-                "appPublisher" : "F1CD0B760DCEE7DE770249F4512A9D0A",
+                "appPublisher" : "root",
                 "appLocalName" : "helloworld",
                 "allowNobodyUser" : false,
                 "accountsURL": "http://root-accounts.vcap.me:3001"
+            }
+        },
+        {
+            "name": "cp"
+        },
+        {
+            "name" : "react",
+            "module": "caf_react#plug",
+            "description": "React.js background rendering",
+            "env": {
+                "appFileName" : "../public/index.html",
+                "separator" : "<section id=\"content\">",
+                "cacheService" : "cp",
+                "expiresInSec" : 60
             }
         }
     ]
