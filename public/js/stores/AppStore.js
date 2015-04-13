@@ -4,8 +4,6 @@ var EventEmitter2 = require('eventemitter2').EventEmitter2;
 
 var CHANGE_EVENT = 'change';
 
-var MAX_NOTIFICATIONS = 5;
-
 var newAppStore = function() {
 
     var server = new EventEmitter2();
@@ -33,15 +31,13 @@ var newAppStore = function() {
     var f = function(action) {
         switch(action.actionType) {
         case AppConstants.APP_UPDATE:
-            state.counter = action.state;
+            state.counter = action.state.counter;
+            state.notif = action.state.notif;
             emitChange();
             break;
         case AppConstants.APP_NOTIFICATION:
-            state.counter = action.state;
-            state.notif.push(action.state);
-            if (state.notif.length > MAX_NOTIFICATIONS) {
-                state.notif.shift();
-            }
+            state.counter = action.state.counter;
+            state.notif = action.state.notif;
             emitChange();
             break;
         case AppConstants.APP_ERROR:

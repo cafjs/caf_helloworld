@@ -17,7 +17,7 @@ AppSession.onopen = function() {
 };
 
 
-exports.main = function(data) {
+var main = exports.main = function(data) {
     if (typeof window === 'undefined') {
         // server side rendering
         AppActions.init(data);

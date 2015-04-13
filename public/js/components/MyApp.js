@@ -51,7 +51,7 @@ var MyApp = {
                              )
                           )
                        ),
-                     cE(rB.Panel, {header: "Last Notification"},
+                     cE(rB.Panel, {header: "Last Notifications"},
                         cE(ListNotif, {notif :this.state.notif})
                        )
                     )
