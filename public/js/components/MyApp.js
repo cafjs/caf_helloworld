@@ -27,26 +27,48 @@ var MyApp = {
     },
     render: function() {
         return cE("div", {className: "container-fluid"},
-                  cE(rB.Panel, {header: cE('h1', null,
-                                           cE(AppStatus,
-                                              {isClosed: this.state.isClosed}),
-                                           " Counter Example")},
+                  cE(rB.Panel, {header: cE(rB.Grid, null,
+                                           cE(rB.Row, null,
+                                              cE(rB.Col, {sm:1, xs:1},
+                                                 cE(AppStatus, {
+                                                        isClosed:
+                                                        this.state.isClosed
+                                                    })
+                                                ),
+                                              cE(rB.Col, {
+                                                     sm: 5,
+                                                     xs:10,
+                                                     className: 'text-right'
+                                                 },
+                                                 "Counter Example"
+                                                ),
+                                              cE(rB.Col, {
+                                                     sm: 5,
+                                                     xs:11,
+                                                     className: 'text-right'
+                                                 },
+                                                 this.state.fullName
+                                                )
+                                             )
+                                          )
+                               },
                      cE(rB.Panel, {header: "Update Counter"},
                         cE(rB.Grid, null,
                            cE(rB.Row, null,
-                              cE(rB.Col, {sm:6},
-                                 cE('p', null, "Current Value ",
-                                    cE(rB.Badge, null, this.state.counter)
-                                   )
+                              cE(rB.Col, { sm:3},
+                                 "Current"
                                 ),
-                              cE(rB.Col, {sm:2},
+                              cE(rB.Col, { sm:3},
+                                    cE(rB.Badge, null, this.state.counter)
+                                ),
+                              cE(rB.Col, { sm: 3},
+                                 cE(rB.Input, {type: 'text', id: 'inc',
+                                               defaultValue: '1'})
+                                ),
+                              cE(rB.Col, { sm:3},
                                  cE(rB.Button, {onClick: this.doIncrement,
                                                 bsStyle: 'primary'},
                                     'Increment')
-                                ),
-                              cE(rB.Col, {sm: 3},
-                                 cE(rB.Input, {type: 'text', id: 'inc',
-                                               defaultValue: '1'})
                                 )
                              )
                           )

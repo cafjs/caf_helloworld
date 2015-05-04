@@ -1,5 +1,8 @@
 {
     "name": "top",
+    "env" : {
+        "publicHostname" : "process.env.publicHostname||root-helloworld.vcap.me"
+    },
     "components": [
         {
             "name": "log",
@@ -19,7 +22,7 @@
                 "appPublisher" : "root",
                 "appLocalName" : "helloworld",
                 "allowNobodyUser" : false,
-                "accountsURL": "http://root-accounts.vcap.me:3001"
+                "accountsURL": "http://root-accounts.vcap.me"
             }
         },
         {

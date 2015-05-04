@@ -28,16 +28,19 @@ var newAppStore = function() {
         return state;
     };
 
+    var mixinState = function(newState) {
+        Object.keys(newState)
+            .forEach(function(key) { state[key] = newState[key]; });
+    };
+
     var f = function(action) {
         switch(action.actionType) {
         case AppConstants.APP_UPDATE:
-            state.counter = action.state.counter;
-            state.notif = action.state.notif;
+            mixinState(action.state);
             emitChange();
             break;
         case AppConstants.APP_NOTIFICATION:
-            state.counter = action.state.counter;
-            state.notif = action.state.notif;
+            mixinState(action.state);
             emitChange();
             break;
         case AppConstants.APP_ERROR:
