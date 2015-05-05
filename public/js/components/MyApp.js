@@ -55,17 +55,18 @@ var MyApp = {
                      cE(rB.Panel, {header: "Update Counter"},
                         cE(rB.Grid, null,
                            cE(rB.Row, null,
-                              cE(rB.Col, { sm:3},
+                              cE(rB.Col, { xs:6, sm:3},
                                  "Current"
                                 ),
-                              cE(rB.Col, { sm:3},
+                              cE(rB.Col, { xs:6, sm:3},
                                     cE(rB.Badge, null, this.state.counter)
                                 ),
-                              cE(rB.Col, { sm: 3},
+                              cE('div', {className:'clearfix visible-xs'}),
+                              cE(rB.Col, { xs:6, sm: 3},
                                  cE(rB.Input, {type: 'text', id: 'inc',
                                                defaultValue: '1'})
                                 ),
-                              cE(rB.Col, { sm:3},
+                              cE(rB.Col, { xs:6, sm:3},
                                  cE(rB.Button, {onClick: this.doIncrement,
                                                 bsStyle: 'primary'},
                                     'Increment')
