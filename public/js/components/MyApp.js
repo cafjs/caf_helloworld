@@ -1,6 +1,5 @@
 var React = require('react');
 var rB = require('react-bootstrap');
-var AppStore = require('../stores/AppStore');
 var AppActions = require('../actions/AppActions');
 var ListNotif = require('./ListNotif');
 var AppStatus = require('./AppStatus');
@@ -9,54 +8,58 @@ var cE = React.createElement;
 
 var MyApp = {
     getInitialState: function() {
-        return AppStore.getState();
+        return this.props.ctx.store.getState();
     },
     componentDidMount: function() {
-        AppStore.addChangeListener(this._onChange);
+        if (!this.unsubscribe) {
+            this.unsubscribe = this.props.ctx.store
+                .subscribe(this._onChange.bind(this));
+            this._onChange();
+        }
     },
     componentWillUnmount: function() {
-        AppStore.removeChangeListener(this._onChange);
+        if (this.unsubscribe) {
+            this.unsubscribe();
+            this.unsubscribe = null;
+        }
     },
-    _onChange : function(ev) {
-        this.setState(AppStore.getState());
+    _onChange : function() {
+        if (this.unsubscribe) {
+            this.setState(this.props.ctx.store.getState());
+        }
     },
-    doIncrement : function(ev) {
-        ev.stopPropagation();
+    doIncrement : function() {
         var inc = parseInt(document.getElementById('inc').value);
-        AppActions.increment(inc);
+        AppActions.increment(this.props.ctx, inc);
     },
     render: function() {
-        return cE("div", {className: "container-fluid"},
-                  cE(rB.Panel, {header: cE(rB.Grid, null,
-                                           cE(rB.Row, null,
-                                              cE(rB.Col, {sm:1, xs:1},
-                                                 cE(AppStatus, {
-                                                        isClosed:
-                                                        this.state.isClosed
-                                                    })
-                                                ),
-                                              cE(rB.Col, {
-                                                     sm: 5,
-                                                     xs:10,
-                                                     className: 'text-right'
-                                                 },
-                                                 "Counter Example"
-                                                ),
-                                              cE(rB.Col, {
-                                                     sm: 5,
-                                                     xs:11,
-                                                     className: 'text-right'
-                                                 },
-                                                 this.state.fullName
-                                                )
-                                             )
-                                          )
-                               },
-                     cE(rB.Panel, {header: "Update Counter"},
+        return cE('div', {className: 'container-fluid'},
+                  cE(rB.Panel, {
+                      header: cE(rB.Grid, null,
+                                 cE(rB.Row, null,
+                                    cE(rB.Col, {sm:1, xs:1},
+                                       cE(AppStatus, {
+                                           isClosed:
+                                           this.state.isClosed
+                                       })),
+                                    cE(rB.Col, {
+                                        sm: 5,
+                                        xs:10,
+                                        className: 'text-right'
+                                    }, 'Counter Example'),
+                                    cE(rB.Col, {
+                                        sm: 5,
+                                        xs:11,
+                                        className: 'text-right'
+                                    }, this.state.fullName)
+                                   )
+                                )
+                  },
+                     cE(rB.Panel, {header: 'Update Counter'},
                         cE(rB.Grid, null,
                            cE(rB.Row, null,
                               cE(rB.Col, { xs:6, sm:3},
-                                 "Current"
+                                 'Current'
                                 ),
                               cE(rB.Col, { xs:6, sm:3},
                                     cE(rB.Badge, null, this.state.counter)
@@ -74,7 +77,7 @@ var MyApp = {
                              )
                           )
                        ),
-                     cE(rB.Panel, {header: "Last Notifications"},
+                     cE(rB.Panel, {header: 'Last Notifications'},
                         cE(ListNotif, {notif :this.state.notif})
                        )
                     )

@@ -7,10 +7,9 @@ var ListNotif = {
         var reverse = this.props.notif.slice(0).reverse();
         return cE(rB.ListGroup, null,
                   reverse.map(function(x, i) {
-                                  return  cE(rB.ListGroupItem, {key:i},
-                                             'counter: ',
-                                             cE(rB.Badge, null,x));
-                              })
+                      return  cE(rB.ListGroupItem, {key:i},
+                                 'counter: ', cE(rB.Badge, null,x));
+                  })
                  );
     }
 };

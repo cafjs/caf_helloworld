@@ -1,79 +1,72 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
 var AppConstants = require('../constants/AppConstants');
-var AppSession = require('../session/AppSession');
 var json_rpc = require('caf_transport').json_rpc;
 
-var updateF = function(state) {
+var updateF = function(store, state) {
     var d = {
-        actionType: AppConstants.APP_UPDATE,
+        type: AppConstants.APP_UPDATE,
         state: state
     };
-    AppDispatcher.dispatch(d);
+    store.dispatch(d);
 };
 
-
-var errorF =  function(err) {
+var errorF =  function(store, err) {
     var d = {
-        actionType: AppConstants.APP_ERROR,
+        type: AppConstants.APP_ERROR,
         error: err
     };
-    AppDispatcher.dispatch(d);
+    store.dispatch(d);
 };
 
-var getNotifData = function(msg) {
-    return json_rpc.getMethodArgs(msg)[0];
-};
-
-var notifyF = function(message) {
+var notifyF = function(store, message) {
+    var getNotifData = function(msg) {
+        return json_rpc.getMethodArgs(msg)[0];
+    };
     var d = {
-        actionType: AppConstants.APP_NOTIFICATION,
+        type: AppConstants.APP_NOTIFICATION,
         state: getNotifData(message)
     };
-    AppDispatcher.dispatch(d);
+    store.dispatch(d);
 };
 
-var wsStatusF =  function(isClosed) {
+var wsStatusF =  function(store, isClosed) {
     var d = {
-        actionType: AppConstants.WS_STATUS,
+        type: AppConstants.WS_STATUS,
         isClosed: isClosed
     };
-    AppDispatcher.dispatch(d);
+    store.dispatch(d);
 };
 
 var AppActions = {
-    initServer: function(initialData) {
-        updateF(initialData);
+    initServer: function(ctx, initialData) {
+        updateF(ctx.store, initialData);
     },
-    init: function(cb) {
-        AppSession.hello(AppSession.getCacheKey(),
-                         function(err, data) {
-                             if (err) {
-                                 errorF(err);
-                             } else {
-                                 updateF(data);
-                             }
-                             cb(err, data);
-                         });
+    init: function(ctx, cb) {
+        ctx.session.hello(ctx.session.getCacheKey(), function(err, data) {
+            if (err) {
+                errorF(ctx.store, err);
+            } else {
+                updateF(ctx.store, data);
+            }
+            cb(err, data);
+        });
     },
-    increment: function(inc) {
-        AppSession.increment(inc, function(err, data) {
-                                 if (err) {
-                                     errorF(err);
-                                 } else {
-                                     updateF(data);
-                                 }
-                             });
+    increment: function(ctx, inc) {
+        ctx.session.increment(inc, function(err, data) {
+            if (err) {
+                errorF(ctx.store, err);
+            } else {
+                updateF(ctx.store, data);
+            }
+        });
+    },
+    message:  function(ctx, msg) {
+        console.log('message:' + JSON.stringify(msg));
+        notifyF(ctx.store, msg);
+    },
+    closing:  function(ctx, err) {
+        console.log('Closing:' + JSON.stringify(err));
+        wsStatusF(ctx.store, true);
     }
-};
-
-AppSession.onmessage = function(msg) {
-    console.log('message:' + JSON.stringify(msg));
-    notifyF(msg);
-};
-
-AppSession.onclose = function(err) {
-    console.log('Closing:' + JSON.stringify(err));
-    wsStatusF(true);
 };
 
 
