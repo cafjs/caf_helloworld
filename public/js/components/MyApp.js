@@ -35,7 +35,7 @@ var MyApp = {
     render: function() {
         return cE('div', {className: 'container-fluid'},
                   cE(rB.Panel, {
-                      header: cE(rB.Grid, null,
+                      header: cE(rB.Grid, {fluid: true},
                                  cE(rB.Row, null,
                                     cE(rB.Col, {sm:1, xs:1},
                                        cE(AppStatus, {
@@ -56,7 +56,7 @@ var MyApp = {
                                 )
                   },
                      cE(rB.Panel, {header: 'Update Counter'},
-                        cE(rB.Grid, null,
+                        cE(rB.Grid, {fluid: true},
                            cE(rB.Row, null,
                               cE(rB.Col, { xs:6, sm:3},
                                  'Current'
