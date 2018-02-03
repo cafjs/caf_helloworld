@@ -54,8 +54,7 @@ var MyApp = {
                                     }, this.state.fullName)
                                    )
                                 )
-                  },
-                     cE(rB.Panel, {header: 'Update Counter'},
+                  }, cE(rB.Panel, {header: 'Update Counter'},
                         cE(rB.Grid, {fluid: true},
                            cE(rB.Row, null,
                               cE(rB.Col, { xs:6, sm:3},

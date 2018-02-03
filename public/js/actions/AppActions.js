@@ -37,33 +37,31 @@ var wsStatusF =  function(store, isClosed) {
 };
 
 var AppActions = {
-    initServer: function(ctx, initialData) {
+    initServer(ctx, initialData) {
         updateF(ctx.store, initialData);
     },
-    init: function(ctx, cb) {
-        ctx.session.hello(ctx.session.getCacheKey(), function(err, data) {
-            if (err) {
-                errorF(ctx.store, err);
-            } else {
-                updateF(ctx.store, data);
-            }
-            cb(err, data);
-        });
+    async init(ctx) {
+        try {
+            var data = await ctx.session.hello(ctx.session.getCacheKey())
+                    .getPromise();
+            updateF(ctx.store, data);
+        } catch (err) {
+            errorF(ctx.store, err);
+        }
     },
-    increment: function(ctx, inc) {
-        ctx.session.increment(inc, function(err, data) {
-            if (err) {
-                errorF(ctx.store, err);
-            } else {
-                updateF(ctx.store, data);
-            }
-        });
+    async increment(ctx, inc) {
+        try {
+            var data = await ctx.session.increment(inc).getPromise();
+            updateF(ctx.store, data);
+        } catch (err) {
+            errorF(ctx.store, err);
+        };
     },
-    message:  function(ctx, msg) {
+    message(ctx, msg) {
         console.log('message:' + JSON.stringify(msg));
         notifyF(ctx.store, msg);
     },
-    closing:  function(ctx, err) {
+    closing(ctx, err) {
         console.log('Closing:' + JSON.stringify(err));
         wsStatusF(ctx.store, true);
     }

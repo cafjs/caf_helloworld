@@ -1,5 +1,4 @@
 var AppConstants = require('../constants/AppConstants');
-var objectAssign = require('object-assign');
 
 var AppReducer = function(state, action) {
     if (typeof state === 'undefined') {
@@ -8,11 +7,11 @@ var AppReducer = function(state, action) {
         switch(action.type) {
         case AppConstants.APP_UPDATE:
         case AppConstants.APP_NOTIFICATION:
-            return objectAssign({}, state, action.state);
+            return Object.assign({}, state, action.state);
         case AppConstants.APP_ERROR:
-            return objectAssign({}, state, {error: action.error});
+            return Object.assign({}, state, {error: action.error});
         case AppConstants.WS_STATUS:
-            return objectAssign({}, state, {isClosed: action.isClosed});
+            return Object.assign({}, state, {isClosed: action.isClosed});
         default:
             return state;
         }
