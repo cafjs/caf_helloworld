@@ -6,33 +6,40 @@ var AppStatus = require('./AppStatus');
 
 var cE = React.createElement;
 
-var MyApp = {
-    getInitialState: function() {
-        return this.props.ctx.store.getState();
-    },
-    componentDidMount: function() {
+class MyApp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = this.props.ctx.store.getState();
+        this.doIncrement = this.doIncrement.bind(this);
+    }
+
+    componentDidMount() {
         if (!this.unsubscribe) {
             this.unsubscribe = this.props.ctx.store
                 .subscribe(this._onChange.bind(this));
             this._onChange();
         }
-    },
-    componentWillUnmount: function() {
+    }
+
+    componentWillUnmount() {
         if (this.unsubscribe) {
             this.unsubscribe();
             this.unsubscribe = null;
         }
-    },
-    _onChange : function() {
+    }
+
+    _onChange() {
         if (this.unsubscribe) {
             this.setState(this.props.ctx.store.getState());
         }
-    },
-    doIncrement : function() {
+    }
+
+    doIncrement() {
         var inc = parseInt(document.getElementById('inc').value);
         AppActions.increment(this.props.ctx, inc);
-    },
-    render: function() {
+    }
+
+    render() {
         return cE('div', {className: 'container-fluid'},
                   cE(rB.Panel, {
                       header: cE(rB.Grid, {fluid: true},
@@ -54,21 +61,18 @@ var MyApp = {
                                     }, this.state.fullName)
                                    )
                                 )
-                  }, cE(rB.Panel, {header: 'Update Counter'},
+                  }, cE(rB.Panel, {header: cE('span', null, 'Current Counter: ',
+                                              cE(rB.Badge,
+                                                 {className: 'big-badge'},
+                                                 this.state.counter)
+                                             )},
                         cE(rB.Grid, {fluid: true},
                            cE(rB.Row, null,
-                              cE(rB.Col, { xs:6, sm:3},
-                                 'Current'
-                                ),
-                              cE(rB.Col, { xs:6, sm:3},
-                                    cE(rB.Badge, null, this.state.counter)
-                                ),
-                              cE('div', {className:'clearfix visible-xs'}),
-                              cE(rB.Col, { xs:6, sm: 3},
+                              cE(rB.Col, { xs:6, sm: 4},
                                  cE(rB.Input, {type: 'text', id: 'inc',
                                                defaultValue: '1'})
                                 ),
-                              cE(rB.Col, { xs:6, sm:3},
+                              cE(rB.Col, { xs:6, sm:4},
                                  cE(rB.Button, {onClick: this.doIncrement,
                                                 bsStyle: 'primary'},
                                     'Increment')
@@ -76,7 +80,8 @@ var MyApp = {
                              )
                           )
                        ),
-                     cE(rB.Panel, {header: 'Last Notifications'},
+                     cE(rB.Panel, {header:  cE('span', null,
+                                               'Last Notifications')},
                         cE(ListNotif, {notif :this.state.notif})
                        )
                     )
@@ -84,4 +89,4 @@ var MyApp = {
     }
 };
 
-module.exports = React.createClass(MyApp);
+module.exports = MyApp;

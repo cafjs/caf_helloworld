@@ -1,0 +1,8 @@
+.row-center-align {
+    display: flex;
+    align-items: center;
+}
+
+.big-badge {
+    font-size: 1.2em;
+}

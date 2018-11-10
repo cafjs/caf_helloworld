@@ -2,17 +2,23 @@ var React = require('react');
 var rB = require('react-bootstrap');
 var cE = React.createElement;
 
-var ListNotif = {
-    render: function() {
+class ListNotif extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
         var reverse = this.props.notif.slice(0).reverse();
         return cE(rB.ListGroup, null,
                   reverse.map(function(x, i) {
-                      return  cE(rB.ListGroupItem, {key:i},
-                                 'counter: ', cE(rB.Badge, null,x));
+                      return  cE(rB.ListGroupItem, {style: {float: 'left'},
+                                                    className: 'clearfix',
+                                                    key:i},
+                                 cE(rB.Badge, {className: 'big-badge'}, x));
                   })
                  );
     }
 };
 
 
-module.exports = React.createClass(ListNotif);
+module.exports = ListNotif;

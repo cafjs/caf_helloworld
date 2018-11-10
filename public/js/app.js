@@ -15,11 +15,14 @@ var main = exports.main = function(data) {
         AppActions.initServer(ctx, data);
         return ReactServer.renderToString(cE(MyApp, {ctx: ctx}));
     } else {
-        AppSession.connect(ctx, function(err) {
-            err && console.log('Cannot connect:' + err);
-            ReactDOM.render(cE(MyApp, {ctx: ctx}),
-                            document.getElementById('content'));
-        });
-        return null;
+        return (async function() {
+            try {
+                await AppSession.connect(ctx);
+                ReactDOM.render(cE(MyApp, {ctx: ctx}),
+                                document.getElementById('content'));
+            } catch (err) {
+                console.log('Cannot connect:' + err);
+            }
+        })();
     }
 };
