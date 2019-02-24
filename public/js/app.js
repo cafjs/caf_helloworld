@@ -21,6 +21,8 @@ var main = exports.main = function(data) {
                 ReactDOM.render(cE(MyApp, {ctx: ctx}),
                                 document.getElementById('content'));
             } catch (err) {
+                document.getElementById('content').innerHTML =
+                    '<H1>Cannot connect: ' + err + '<H1/>';
                 console.log('Cannot connect:' + err);
             }
         })();
