@@ -1,10 +1,10 @@
-# CAF (Cloud Assistant Framework)
+# Caf.js
 
-Co-design permanent, active, stateful, reliable cloud proxies with your web app.
+Co-design permanent, active, stateful, reliable cloud proxies with your web app and gadgets.
 
-See http://www.cafjs.com 
+See https://www.cafjs.com
 
-## CAF example using React.js and Bootstrap 
+## Example using React.js and Bootstrap
 
 Basic example application using React+Flux and react-bootstrap components.
 
