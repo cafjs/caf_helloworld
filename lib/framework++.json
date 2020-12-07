@@ -23,7 +23,11 @@
                 "appFileName" : "../public/index.html",
                 "separator" : "<section id=\"content\">",
                 "cacheService" : "cp",
-                "expiresInSec" : "process.env.EXPIRES_IN_SEC||60"
+                "expiresInSec" : "process.env.EXPIRES_IN_SEC||60",
+                "appCDN" : "$._.env.appCDN",
+                "appSubdirCDN" : "$._.env.appSubdirCDN",
+                "appLocalName" : "$._.env.appLocalName",
+                "disableCDN" : false
             }
         }
     ]
