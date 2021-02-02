@@ -1,16 +1,19 @@
-var React = require('react');
-var rB = require('react-bootstrap');
-var AppActions = require('../actions/AppActions');
-var ListNotif = require('./ListNotif');
-var AppStatus = require('./AppStatus');
+'use strict';
 
-var cE = React.createElement;
+const React = require('react');
+const rB = require('react-bootstrap');
+const AppActions = require('../actions/AppActions');
+const ListNotif = require('./ListNotif');
+const AppStatus = require('./AppStatus');
+const Counter = require('./Counter');
+const DisplayError = require('./DisplayError');
+
+const cE = React.createElement;
 
 class MyApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.props.ctx.store.getState();
-        this.doIncrement = this.doIncrement.bind(this);
     }
 
     componentDidMount() {
@@ -34,55 +37,59 @@ class MyApp extends React.Component {
         }
     }
 
-    doIncrement() {
-        var inc = parseInt(document.getElementById('inc').value);
-        AppActions.increment(this.props.ctx, inc);
-    }
-
     render() {
         return cE('div', {className: 'container-fluid'},
-                  cE(rB.Panel, {
-                      header: cE(rB.Grid, {fluid: true},
-                                 cE(rB.Row, null,
-                                    cE(rB.Col, {sm:1, xs:1},
-                                       cE(AppStatus, {
-                                           isClosed:
-                                           this.state.isClosed
-                                       })),
-                                    cE(rB.Col, {
-                                        sm: 5,
-                                        xs:10,
-                                        className: 'text-right'
-                                    }, 'Counter Example'),
-                                    cE(rB.Col, {
-                                        sm: 5,
-                                        xs:11,
-                                        className: 'text-right'
-                                    }, this.state.fullName)
-                                   )
-                                )
-                  }, cE(rB.Panel, {header: cE('span', null, 'Current Counter: ',
-                                              cE(rB.Badge,
-                                                 {className: 'big-badge'},
-                                                 this.state.counter)
-                                             )},
-                        cE(rB.Grid, {fluid: true},
-                           cE(rB.Row, null,
-                              cE(rB.Col, { xs:6, sm: 4},
-                                 cE(rB.Input, {type: 'text', id: 'inc',
-                                               defaultValue: '1'})
-                                ),
-                              cE(rB.Col, { xs:6, sm:4},
-                                 cE(rB.Button, {onClick: this.doIncrement,
-                                                bsStyle: 'primary'},
-                                    'Increment')
+                  cE(DisplayError, {
+                      ctx: this.props.ctx,
+                      error: this.state.error
+                  }),
+                  cE(rB.Panel, null,
+                     cE(rB.Panel.Heading, null,
+                        cE(rB.Panel.Title, null,
+                           cE(rB.Grid, {fluid: true},
+                              cE(rB.Row, null,
+                                 cE(rB.Col, {sm:1, xs:1},
+                                    cE(AppStatus, {
+                                        isClosed: this.state.isClosed
+                                    })
+                                   ),
+                                 cE(rB.Col, {
+                                     sm: 5,
+                                     xs:10,
+                                     className: 'text-right'
+                                 }, 'Counter Example'),
+                                 cE(rB.Col, {
+                                     sm: 5,
+                                     xs:11,
+                                     className: 'text-right'
+                                 }, this.state.fullName)
                                 )
                              )
                           )
                        ),
-                     cE(rB.Panel, {header:  cE('span', null,
-                                               'Last Notifications')},
-                        cE(ListNotif, {notif :this.state.notif})
+                     cE(rB.Panel.Body, null,
+                        cE(rB.Panel, null,
+                           cE(rB.Panel.Heading, null,
+                              cE(rB.Panel.Title, null, 'Counter')
+                             ),
+                           cE(rB.Panel.Body, null,
+                              cE(Counter, {
+                                  ctx: this.props.ctx,
+                                  counter: this.state.counter,
+                                  increment: this.state.increment
+                              })
+                             )
+                          ),
+                        cE(rB.Panel, null,
+                           cE(rB.Panel.Heading, null,
+                              cE(rB.Panel.Title, null, 'Last Notifications')
+                             ),
+                           cE(rB.Panel.Body, null,
+                              cE(ListNotif, {
+                                  notif: this.state.notif
+                              })
+                             )
+                          )
                        )
                     )
                  );

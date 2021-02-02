@@ -1,6 +1,6 @@
-var React = require('react');
-var rB = require('react-bootstrap');
-var cE = React.createElement;
+const React = require('react');
+const rB = require('react-bootstrap');
+const cE = React.createElement;
 
 class ListNotif extends React.Component {
     constructor(props) {
@@ -8,7 +8,7 @@ class ListNotif extends React.Component {
     }
 
     render() {
-        var reverse = this.props.notif.slice(0).reverse();
+        const reverse = this.props.notif.slice(0).reverse();
         return cE(rB.ListGroup, null,
                   reverse.map(function(x, i) {
                       return  cE(rB.ListGroupItem, {style: {float: 'left'},

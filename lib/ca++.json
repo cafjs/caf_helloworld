@@ -20,6 +20,18 @@
                     }
                 }
             ]
+        },
+        {
+            "name": "handler",
+            "components" : [
+                {
+                    "name": "props",
+                    "env" : {
+                        "divisor": "process.env.DIVISOR||5",
+                        "maxNotif": "process.env.MAX_NOTIF||5"
+                    }
+                }
+            ]
         }
     ]
 }
