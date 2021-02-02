@@ -30,11 +30,11 @@ class Counter extends React.Component {
 
     render() {
         return cE(rB.Form, {horizontal: true},
-                  cE(rB.FormGroup, {controlId: 'counterId'},
-                     cE(rB.Col, {sm:2, xs: 4},
+                  cE(rB.FormGroup, {controlId: 'counterId', bsSize: 'large'},
+                     cE(rB.Col, {sm:2, xs: 12},
                         cE(rB.ControlLabel, null, 'Current')
                        ),
-                      cE(rB.Col, {sm:6, xs: 8},
+                      cE(rB.Col, {sm:4, xs: 12},
                          cE(rB.FormControl, {
                              type: 'text',
                              readOnly: true,
@@ -43,25 +43,28 @@ class Counter extends React.Component {
                         )
                     ),
 
-                  cE(rB.FormGroup, {controlId: 'incId'},
-                     cE(rB.Col, {sm:2, xs: 4},
+                  cE(rB.FormGroup, {controlId: 'incId', bsSize: 'large'},
+                     cE(rB.Col, {sm:2, xs: 12},
                         cE(rB.ControlLabel, null, 'Increment')
                        ),
-                     cE(rB.Col, {sm:6, xs: 8},
+                     cE(rB.Col, {sm:4, xs: 12},
                         cE(rB.FormControl, {
                             type: 'text',
                             value: this.props.increment,
-                            placeholder: '1',
+                            placeholder: '',
                             onChange: this.handleIncrement
                         })
-                       ),
-                     cE(rB.Col, {sm:4, xs: 8},
+                       )
+                    ),
+
+                   cE(rB.FormGroup, {controlId: 'buttonId', bsSize: 'large'},
+                     cE(rB.Col, {smOffset:2 ,sm:4, xs: 12},
                         cE(rB.Button, {
                             bsStyle: 'primary',
                             onClick: this.doIncrement
                         }, 'Change')
                        )
-                    )
+                     )
                  );
     }
 }
