@@ -58,11 +58,9 @@ const AppActions = {
         };
     },
     message(ctx, msg) {
-        console.log('message:' + JSON.stringify(msg));
         notifyF(ctx.store, msg);
     },
     closing(ctx, err) {
-        console.log('Closing:' + JSON.stringify(err));
         wsStatusF(ctx.store, true);
     },
     setLocalState(ctx, data) {

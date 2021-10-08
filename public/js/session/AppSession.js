@@ -3,6 +3,10 @@ const AppActions = require('../actions/AppActions');
 
 exports.connect = function(ctx) {
     return new Promise((resolve, reject) => {
+        window.location.href = cli.patchURL(window.location.href, {
+            session: `user${cli.randomString(8)}`
+        });
+
         const session = new cli.Session(window.location.href);
 
         session.onopen = async function() {
