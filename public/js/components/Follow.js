@@ -12,6 +12,7 @@ class Follow extends React.Component {
         this.doLink = this.doLink.bind(this);
         this.doUnlink = this.doUnlink.bind(this);
         this.doReset = this.doReset.bind(this);
+        this.keyDown = this.keyDown.bind(this);
         this.handleFollow = this.handleFollow.bind(this);
         this.state = {target: ''};
     }
@@ -20,9 +21,17 @@ class Follow extends React.Component {
         this.setState({target: ev.target.value});
     }
 
+    keyDown(ev) {
+        if (ev.key === 'Enter') {
+            ev.preventDefault();
+            this.doLink(ev);
+        }
+    }
+
     doLink(ev) {
         if (this.state.target) {
             AppActions.follow(this.props.ctx, this.state.target);
+            this.setState({target: ''});
         } else {
             AppActions.setError(this.props.ctx, new Error('Invalid name'));
         }
@@ -49,6 +58,7 @@ class Follow extends React.Component {
                             type: 'text',
                             value: this.state.target,
                             placeholder: 'foo-bar',
+                            onKeyPress: this.keyDown,
                             onChange: this.handleFollow
                         })
                        )
