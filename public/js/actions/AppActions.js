@@ -49,14 +49,6 @@ const AppActions = {
             errorF(ctx.store, err);
         }
     },
-    async increment(ctx, inc) {
-        try {
-            const data = await ctx.session.increment(inc).getPromise();
-            updateF(ctx.store, data);
-        } catch (err) {
-            errorF(ctx.store, err);
-        };
-    },
     message(ctx, msg) {
         notifyF(ctx.store, msg);
     },
@@ -74,5 +66,20 @@ const AppActions = {
     }
 };
 
+const EXTERNAL_METHODS = [
+    'increment', 'follow', 'unfollow', 'getState', 'reset'
+];
+
+EXTERNAL_METHODS.forEach(function(x) {
+    AppActions[x] = async function(ctx, ...args) {
+        try {
+            const data = await ctx.session[x].apply(ctx.session, args)
+                .getPromise();
+            updateF(ctx.store, data);
+        } catch (err) {
+            errorF(ctx.store, err);
+        }
+    };
+});
 
 module.exports = AppActions;
