@@ -36,7 +36,7 @@
                     "env" : {
                         "divisor": "process.env.DIVISOR||5",
                         "timeoutInMsec" : "process.env.TIMEOUT_IN_MSEC||15000",
-                        "maxNotif": "process.env.MAX_NOTIF||10"
+                        "maxNotif": "process.env.MAX_NOTIF||5"
                     }
                 }
             ]
